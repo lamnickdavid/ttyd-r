@@ -1,0 +1,16 @@
+[Unit]
+Description=ttyd web terminal service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/ProgramFiles
+Environment=TERM=xterm-256color
+EnvironmentFile=/.config/ttyd/ttyd.env
+ExecStart=/bin/sh -lc 'exec /ProgramFiles/ttyd/ttyd --interface 0.0.0.0 --port 7681 --check-origin -c "$TTYD_CREDENTIAL" --writable /bin/bash -l'
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target
